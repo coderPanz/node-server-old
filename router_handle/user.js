@@ -1,14 +1,27 @@
 // 导入模型对象
-const userModel = require("../models/user");
+const userModel = require('../models/user')
+
+// 更新修改后的文档对象
+userModel.updateMany({}, { $set: { name: "coderPanz" }}).then(() => {
+  console.log('文档更新成功');
+})
+.catch((error) => {
+  console.error('文档更新失败:', error);
+});
 
 exports.list = (req, res) => {
+  let queryData = req.body
+  console.log(queryData)
   userModel
-    .find()
+    .find({ name: "coder" })
     .then((data) => {
       if (data !== null) {
         console.log("用户列表: ", data);
+        // 统计返回值的个数, 以便前端做分页展示
+        const count = data.length
         res.status(200).json({
           data: data,
+          count: count
         });
       } else {
         console.log("查询失败", data);
