@@ -2,18 +2,16 @@
 const userModel = require('../models/user')
 
 // 更新修改后的文档对象
-userModel.updateMany({}, { $set: { name: "coderPanz" }}).then(() => {
-  console.log('文档更新成功');
-})
-.catch((error) => {
-  console.error('文档更新失败:', error);
-});
+// userModel.updateMany({}, { $set: { name: "coderPanz" }}).then(() => {
+//   console.log('文档更新成功');
+// })
+// .catch((error) => {
+//   console.error('文档更新失败:', error);
+// });
 
 exports.list = (req, res) => {
-  let queryData = req.body
-  console.log(queryData)
   userModel
-    .find({ name: "coder" })
+    .find()
     .then((data) => {
       if (data !== null) {
         console.log("用户列表: ", data);
@@ -119,22 +117,22 @@ exports.delete = (req, res) => {
 }; // 删除指定id角色
 
 exports.one = (req, res) => {
-  let id = req.params.id;
+  let queryDoc = req.body;
   userModel
-    .findOne({ id: id })
+    .find(queryDoc)
     .then((data) => {
       if (data !== null) {
         console.log("查询成功!", data);
+        const count = data.length
         res.status(200).json({
           msg: "查询成功!",
           data: data,
-          status: 200,
+          count: count
         });
       } else {
         console.log("查询失败!");
         res.status(404).json({
           msg: "查询失败!",
-          status: 404,
         });
       }
     })
@@ -144,7 +142,7 @@ exports.one = (req, res) => {
         msg: "查询异常!",
       });
     });
-}; // 获取指定id用户
+}; // 获取指定条件用户用户
 
 exports.updateRoles = (req, res) => {
   let id = req.params.id;
