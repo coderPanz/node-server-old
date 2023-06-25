@@ -11,6 +11,7 @@ exports.login = (req, res) => {
   loginModel.findOne({ name: name, password: password }).then((data) => {
     if (data != null) {
       console.log("查询成功, 完成登录! 返回token");
+      console.log(data)
       const user = { ...req.body, password: md5(password) };
       const tokenStr = generateToken(user);
       res.json({

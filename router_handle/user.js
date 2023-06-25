@@ -1,40 +1,29 @@
 // 导入模型对象
 const userModel = require("../models/user");
 
-// 更新修改后的文档对象
-// userModel.updateMany({}, { $set: { name: "coderPanz" }}).then(() => {
-//   console.log('文档更新成功');
-// })
-// .catch((error) => {
-//   console.error('文档更新失败:', error);
-// });
-
 exports.list = (req, res) => {
-    userModel
-      .find()
-      .then((data) => {
-        if (data !== null) {
-          console.log("用户列表: ", data);
-          // 统计返回值的个数, 以便前端做分页展示
-          const count = data.length;
-          res.status(200).json({
-            data: data,
-            count: count,
-          });
-        } else {
-          console.log("查询失败");
-          res.status(404).json({
-            msg: "查询失败!",
-          });
-        }
-      })
-      .catch((err) => {
-        console.log("查询异常!", err);
-        res.status(500).json({
-          msg: "查询异常!",
+  userModel
+    .find()
+    .then((data) => {
+      if (data !== null) {
+        console.log("用户列表: ", data);
+        res.status(200).json({
+          data: data,
         });
-      })
-} // 获取用户列表
+      } else {
+        console.log("查询失败");
+        res.status(404).json({
+          msg: "查询失败!",
+        });
+      }
+    })
+    .catch((err) => {
+      console.log("查询异常!", err);
+      res.status(500).json({
+        msg: "查询异常!",
+      });
+    });
+}; // 获取用户列表
 
 exports.create = (req, res) => {
   let userDoc = req.body;
@@ -117,17 +106,15 @@ exports.delete = (req, res) => {
 }; // 删除指定id角色
 
 exports.one = (req, res) => {
-  let queryDoc = req.body;
+  let id = req.params.id;
   userModel
-    .find(queryDoc)
+    .findOne({ id: id })
     .then((data) => {
       if (data !== null) {
         console.log("查询成功!", data);
-        const count = data.length;
         res.status(200).json({
           msg: "查询成功!",
-          data: data,
-          count: count,
+          data: data
         });
       } else {
         console.log("查询失败!");
@@ -142,7 +129,7 @@ exports.one = (req, res) => {
         msg: "查询异常!",
       });
     });
-}; // 获取指定条件用户用户
+}; // 根据id查询单个用户
 
 exports.updateRoles = (req, res) => {
   let id = req.params.id;
@@ -171,3 +158,15 @@ exports.updateRoles = (req, res) => {
       });
     });
 }; // 给指定id用户分配角色
+
+exports.paginationQuery = async (req, res) => {
+  let { size, offset } = req.body;
+  const data = await userModel.find().skip(offset).limit(size);
+  // 查询符合条件的文档总数
+  const totalCount = await userModel.countDocuments();
+  console.log(data)
+  res.json({
+    data: data,
+    totalCount: totalCount
+  })
+} // 分页查询
