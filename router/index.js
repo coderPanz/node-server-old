@@ -18,7 +18,7 @@ router.post('/login', validataUser, loginAdmin.login)
 /**********一、用户登录路由分发**********/
 const usersAdmin = require('../router_handle/user')
 router
-  .post('/user/list', usersAdmin.list) // 获取用户列表
+  .get('/user', usersAdmin.list) // 获取用户列表
   .post('/user', usersAdmin.create) // 创建用户
   .patch('/user/:id', usersAdmin.update) // 更新指定id用户
   .delete('/user/:id', usersAdmin.delete) // 删除指定id用户

@@ -10,11 +10,6 @@ const userModel = require("../models/user");
 // });
 
 exports.list = (req, res) => {
-  // 需求: 需要设计前端的分页操作
-  // 第一次打开网页默认在第一页的话offset此时为0, 我们需要只需要返回前十条数据
-  // 但是需要返回数据总个数
-  const { offset, size } = req.body;
-  if (offset === 0) {
     userModel
       .find()
       .then((data) => {
@@ -22,21 +17,12 @@ exports.list = (req, res) => {
           console.log("用户列表: ", data);
           // 统计返回值的个数, 以便前端做分页展示
           const count = data.length;
-          // 返回指定数据
-          if (size < count) {
-            const result = data.splice(0, size);
-            res.status(200).json({
-              data: result,
-              count: count,
-            })
-          } else {
-            res.status(200).json({
-              data: data,
-              count: count,
-            })
-          }
+          res.status(200).json({
+            data: data,
+            count: count,
+          });
         } else {
-          console.log("查询失败", data);
+          console.log("查询失败");
           res.status(404).json({
             msg: "查询失败!",
           });
@@ -47,43 +33,8 @@ exports.list = (req, res) => {
         res.status(500).json({
           msg: "查询异常!",
         });
-      });
-  } else {
-    userModel
-      .find()
-      .then((data) => {
-        if (data !== null) {
-          console.log("用户列表: ", data);
-          // 统计返回值的个数, 以便前端做分页展示
-          const count = data.length;
-          // 返回指定数据
-          if(offset < count) {
-            const result = data.splice(0, offset);
-            res.status(200).json({
-              data: result,
-              count: count,
-            });
-          } else {
-            res.status(200).json({
-              data: data,
-              count: count,
-            });
-          }
-        } else {
-          console.log("查询失败", data);
-          res.status(404).json({
-            msg: "查询失败!",
-          });
-        }
       })
-      .catch((err) => {
-        console.log("查询异常!", err);
-        res.status(500).json({
-          msg: "查询异常!",
-        });
-      });
-  }
-}; // 获取用户列表
+} // 获取用户列表
 
 exports.create = (req, res) => {
   let userDoc = req.body;
