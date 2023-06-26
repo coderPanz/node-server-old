@@ -114,7 +114,7 @@ exports.one = (req, res) => {
         console.log("查询成功!", data);
         res.status(200).json({
           msg: "查询成功!",
-          data: data
+          data: data,
         });
       } else {
         console.log("查询失败!");
@@ -160,14 +160,27 @@ exports.updateRoles = (req, res) => {
 }; // 给指定id用户分配角色
 
 exports.paginationQuery = async (req, res) => {
-  let { size, offset } = req.body;
-  let { id, name, status, createdAt } = req.body
-  const data = await userModel.find({ name: name, id: id, status: status }).skip(offset).limit(size)
+  let { size, offset, id, name, status, createdAt } = req.body;
+
+  // 我先进行一层判断, 如果有值的话就做为查询的条件, 没有值的话就不需要作为查询条件
+  const query = {};
+  if (id) query.id = id;
+  if (name) query.name = name;
+  if (status) query.status = status;
+  if (createdAt) {
+    // 获取创建时间的范围
+    const startDate = createdAt[0];
+    const endDate = createdAt[1];
+    query.createdAt = { $gte: startDate, $lte: endDate };
+  }
+
+
+  const data = await userModel.find(query).skip(offset).limit(size);
   // 查询符合条件的文档总数
   const totalCount = await userModel.countDocuments();
-  console.log(data)
+  // console.log(data);
   res.json({
     data: data,
-    totalCount: totalCount
-  })
-} // 分页查询
+    totalCount: totalCount,
+  });
+}; // 分页查询
