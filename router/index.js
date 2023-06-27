@@ -19,7 +19,7 @@ router.post('/login', validataUser, loginAdmin.login)
 const usersAdmin = require('../router_handle/user')
 router
   .get('/user', usersAdmin.list) // 获取用户列表
-  // .post('/user', usersAdmin.create) // 创建用户
+  .post('/user', usersAdmin.create) // 创建用户
   .patch('/user/:id', usersAdmin.update) // 更新指定id用户
   .delete('/user/:id', usersAdmin.delete) // 删除指定id用户
   .post('/user/:id', usersAdmin.one) // 获取指定id用户
