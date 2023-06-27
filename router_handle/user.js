@@ -103,7 +103,7 @@ exports.delete = (req, res) => {
         msg: "删除异常!",
       });
     });
-}; // 删除指定id角色
+}; // 删除指定id用户
 
 exports.one = (req, res) => {
   let id = req.params.id;
@@ -178,7 +178,6 @@ exports.paginationQuery = async (req, res) => {
   const data = await userModel.find(query).skip(offset).limit(size);
   // 查询符合条件的文档总数
   const totalCount = await userModel.countDocuments();
-  // console.log(data);
   res.json({
     data: data,
     totalCount: totalCount,
