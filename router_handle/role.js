@@ -106,8 +106,7 @@ exports.one = (req, res) => {
     } else {
       console.log('查询失败!')
       res.status(404).json({
-        msg: "查询失败!",
-        status: 404
+        msg: "查询失败!"
       })
     }
   }).catch(err => {
