@@ -100,8 +100,7 @@ exports.one = (req, res) => {
       console.log('查询成功!', data)
       res.status(200).json({
         msg: "查询成功!",
-        data: data,
-        status: 200
+        data: data
       })
     } else {
       console.log('查询失败!')
