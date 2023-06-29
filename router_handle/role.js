@@ -101,8 +101,7 @@ exports.one = (req, res) => {
       console.log('查询成功!', data)
       res.status(200).json({
         msg: "查询成功!",
-        data: data,
-        status: 200
+        data: data
       })
     } else {
       console.log('查询失败!')
@@ -127,8 +126,7 @@ exports.updateRoles = (req, res) => {
       console.log('权限分配成功!')
       res.status(201).json({
         msg: "权限分配成功",
-        data: data,
-        status: 201
+        data: data
       })
     } else {
       console.log('权限分配失败!')
