@@ -1,5 +1,5 @@
 /**********创建模型对象的文件**********/
-
+const roleModel = require('../models/role')
 // 导入mongoose
 const mongoose = require("mongoose");
 
@@ -17,11 +17,10 @@ const loginSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-});
+  }
+})
 
 // 创建模型对象, 可以通过模型对象进行文档的增删改查
-let loginModel = mongoose.model("login", loginSchema);
-
+let loginModel = mongoose.model('login', loginSchema)
 // 导出对象
 module.exports = loginModel;

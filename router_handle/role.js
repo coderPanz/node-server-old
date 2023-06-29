@@ -1,7 +1,6 @@
 // 导入模型对象
 const roleModel = require("../models/role");
 
-
 exports.list = (req, res) => {
   roleModel.find().then(data => {
     if(data !== null) {
