@@ -11,34 +11,8 @@ exports.menuTree = (req, res) => {
         const menuIdList = data.menus;
         console.log(menuIdList);
         menuModel.find({ _id: { $in: menuIdList } }).then((data) => {
-          res.json(data);
-          // 转换菜单数据为树形结构
-          // function buildMenuTree(menus) {
-          //   const menuMap = {};
-          //   const rootNodes = [];
-
-          //   // 将菜单项转换成以 _id 为 key 的对象
-          //   menus.forEach((menu) => {
-          //     menuMap[menu._id] = menu;
-          //     menu.children = [];
-          //   });
-
-          //   // 构建菜单树
-          //   menus.forEach((menu) => {
-          //     if (menu.parentId) {
-          //       // 当前菜单不是根节点，将其加入父节点的 children 属性中
-          //       const parent = menuMap[menu.parentId];
-          //       parent.children.push(menu);
-          //     } else {
-          //       // 当前菜单是根节点，将其加入 rootNodes 数组中
-          //       rootNodes.push(menu);
-          //     }
-          //   });
-
-          //   return rootNodes;
-          // }
-          // const menuTree = buildMenuTree(menuIdList)
-        });
+          res.json(data)
+        })
       } else {
         console.log("查询失败!");
         res.status(404).json({
