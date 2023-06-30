@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 
 // 定义子菜单 
 const submenuSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -44,6 +48,10 @@ const submenuSchema = new mongoose.Schema({
 
 // 定义父菜单
 const menuSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true
+  },
   name: {
     type: String,
     required: true

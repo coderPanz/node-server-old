@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const menuModel = require('../models/menu')
 // 定义用户模型数据结构 
 const roleSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true
+  },
   name: {
     type: String,
     required: true,
