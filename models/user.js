@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  password: {
+    type: String,
+    required: true
+  },
   // 角色
   roles: {
     type: [mongoose.Schema.Types.ObjectId],
