@@ -1,7 +1,7 @@
 const md5 = require("md5");
 const generateToken = require("../utils/generateToken/generateToken");
 const loginModel = require("../models/login");
-
+const userModel = require('../models/user')
 exports.login = (req, res) => {
   // 取出用户信息并向数据库查询, 若查询成功则生成token并返回给客户端
   let { name, password } = req.body;

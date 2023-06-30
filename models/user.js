@@ -2,14 +2,9 @@ const mongoose = require('mongoose')
 const roleModel = require('../models/role')
 // 定义用户模型数据结构 
 const userSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true
-  },
   name: {
     type: String,
-    required: true,
-    // unique: true
+    required: true
   },
   // 角色
   roles: {
